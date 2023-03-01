@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Ravenclaw extends Hogwarts {
+
     Random random = new Random();
     private int wisdom;
     private int wit;

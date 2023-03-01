@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Hogwarts {
+
     Random random = new Random();
     private String fullName;
     private int power;

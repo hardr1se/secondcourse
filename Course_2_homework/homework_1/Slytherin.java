@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Slytherin extends Hogwarts {
+
     Random random = new Random();
     private int trickiness;
     private int resoluteness;

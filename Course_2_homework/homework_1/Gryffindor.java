@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Gryffindor extends Hogwarts {
+
     Random random = new Random();
     private int nobleness;
     private int bravery;
