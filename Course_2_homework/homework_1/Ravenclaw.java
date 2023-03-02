@@ -29,21 +29,25 @@ public class Ravenclaw extends Hogwarts {
         return creativity;
     }
 
-    public static void comparePupilsRavenclaw() {
-        int max = Integer.MIN_VALUE; int count = 0;
+    public void comparePupilsRavenclaw() {
+        int max = Integer.MIN_VALUE;
+        int count = 0;
         int bestPupil = 0;
-        ArrayList<Ravenclaw> ravenclaw = Hogwarts.getRavenclaw();
+        ArrayList<Ravenclaw> ravenclaw = Main.fillRavenclaw();
+        int[] twoPupils = new int[2];
         System.out.println("Когтевран");
-        for (int i = 0; i < ravenclaw.size(); i++) {
-            System.out.println(ravenclaw.get(i));
-            int sum = ravenclaw.get(i).getWisdom()
-                    + ravenclaw.get(i).getWit()
-                    + ravenclaw.get(i).getCreativity();
+        for (int i = 0; i < twoPupils.length; i++) {
+            twoPupils[i] = random.nextInt(0, ravenclaw.size());
+            System.out.println(ravenclaw.get(twoPupils[i]));
+            int sum = ravenclaw.get(twoPupils[i]).getWisdom()
+                    + ravenclaw.get(twoPupils[i]).getWit()
+                    + ravenclaw.get(twoPupils[i]).getCreativity();
             if (sum > max) {
+                count = bestPupil;
                 max = sum;
-                bestPupil = i;
+                bestPupil = twoPupils[i];
             } else {
-                count = i;
+                count = twoPupils[i];
             }
         }
         System.out.println("\n" + ravenclaw.get(bestPupil).getFullName() + " лучший Когтеврановец, чем "

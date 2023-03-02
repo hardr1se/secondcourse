@@ -41,23 +41,27 @@ public class Slytherin extends Hogwarts {
         return authority_hunger;
     }
 
-    public static void comparePupilsSlytherin() {
-        int max = Integer.MIN_VALUE; int count = 0;
+    public void comparePupilsSlytherin() {
+        int max = Integer.MIN_VALUE;
+        int count = 0;
         int bestPupil = 0;
-        ArrayList<Slytherin> slytherin = Hogwarts.getSlytherin();
+        ArrayList<Slytherin> slytherin = Main.fillSlytherin();
+        int[] twoPupils = new int[2];
         System.out.println("Слизерин");
-        for (int i = 0; i < slytherin.size(); i++) {
-            System.out.println(slytherin.get(i));
-            int sum = slytherin.get(i).getTrickiness()
-                    + slytherin.get(i).getResoluteness()
-                    + slytherin.get(i).getAmbition()
-                    + slytherin.get(i).getReadiness()
-                    + slytherin.get(i).getAuthority_hunger();
+        for (int i = 0; i < twoPupils.length; i++) {
+            twoPupils[i] = random.nextInt(0, slytherin.size());
+            System.out.println(slytherin.get(twoPupils[i]));
+            int sum = slytherin.get(twoPupils[i]).getTrickiness()
+                    + slytherin.get(twoPupils[i]).getResoluteness()
+                    + slytherin.get(twoPupils[i]).getAmbition()
+                    + slytherin.get(twoPupils[i]).getReadiness()
+                    + slytherin.get(twoPupils[i]).getAuthority_hunger();
             if (sum > max) {
+                count = bestPupil;
                 max = sum;
-                bestPupil = i;
+                bestPupil = twoPupils[i];
             } else {
-                count = i;
+                count = twoPupils[i];
             }
         }
         System.out.println("\n" + slytherin.get(bestPupil).getFullName() + " лучший Слизериновец, чем "

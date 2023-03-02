@@ -29,21 +29,25 @@ public class Hufflepuff extends Hogwarts {
         return honesty;
     }
 
-    public static void comparePupilsHufflepuff() {
-        int max = Integer.MIN_VALUE; int count = 0;
+    public void comparePupilsHufflepuff() {
+        int max = Integer.MIN_VALUE;
+        int count = 0;
         int bestPupil = 0;
-        ArrayList<Hufflepuff> hufflepuff = Hogwarts.getHufflepuff();
+        ArrayList<Hufflepuff> hufflepuff = Main.fillHufflepuff();
+        int[] twoPupils = new int[2];
         System.out.println("Пуффендуй");
-        for (int i = 0; i < hufflepuff.size(); i++) {
-            System.out.println(hufflepuff.get(i));
-            int sum = hufflepuff.get(i).getHard_working()
-                    + hufflepuff.get(i).getLoyalty()
-                    + hufflepuff.get(i).getHonesty();
+        for (int i = 0; i < twoPupils.length; i++) {
+            twoPupils[i] = random.nextInt(0, hufflepuff.size());
+            System.out.println(hufflepuff.get(twoPupils[i]));
+            int sum = hufflepuff.get(twoPupils[i]).getHard_working()
+                    + hufflepuff.get(twoPupils[i]).getLoyalty()
+                    + hufflepuff.get(twoPupils[i]).getHonesty();
             if (sum > max) {
+                count = bestPupil;
                 max = sum;
-                bestPupil = i;
+                bestPupil = twoPupils[i];
             } else {
-                count = i;
+                count = twoPupils[i];
             }
         }
         System.out.println("\n" + hufflepuff.get(bestPupil).getFullName() + " лучший Пуффендуец, чем "
