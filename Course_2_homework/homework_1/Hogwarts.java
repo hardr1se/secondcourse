@@ -1,10 +1,9 @@
 package homework_1;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-public class Hogwarts {
-    Random random = new Random();
+public abstract class Hogwarts {
+    private Random random = new Random();
     private String fullName;
     private int power;
     private int transgressionRange;
@@ -27,47 +26,23 @@ public class Hogwarts {
         return transgressionRange;
     }
 
-    public void comparePupilsPower() {
-        ArrayList<Hogwarts> hogwarts = Main.fillHogwarts();
-        int bestPower = Integer.MIN_VALUE;
-        int bestPupil = 0;
-        int count = 0;
-        int[] twoPupils = new int[2];
-        for (int i = 0; i < twoPupils.length; i++) {
-            twoPupils[i] = random.nextInt(0,hogwarts.size());
-            System.out.println(hogwarts.get(twoPupils[i]));
-            if (hogwarts.get(twoPupils[i]).getPower() > bestPower) {
-                count = bestPower;
-                bestPower = hogwarts.get(twoPupils[i]).getPower();
-                bestPupil = twoPupils[i];
-            } else {
-                count = twoPupils[i];
-            }
-        }
-        System.out.println("\n" + hogwarts.get(bestPupil).getFullName()
-                + " обладает большей мощностью магии, чем " + hogwarts.get(count).getFullName() + "\n");
+    private int strength() {
+        return power + transgressionRange;
     }
 
-    public void comparePupilsTransgressionRange() {
-        ArrayList<Hogwarts> hogwarts = Main.fillHogwarts();
-        int bestTransgression = Integer.MIN_VALUE;
-        int bestPupil = 0;
-        int count = 0;
-        int[] twoPupils = new int[2];
-        for (int i = 0; i < twoPupils.length; i++) {
-            twoPupils[i] = random.nextInt(0,hogwarts.size());
-            System.out.println(hogwarts.get(twoPupils[i]));
-            if (hogwarts.get(twoPupils[i]).getTransgressionRange() > bestTransgression) {
-                count = bestPupil;
-                bestTransgression = hogwarts.get(twoPupils[i]).getTransgressionRange();
-                bestPupil = twoPupils[i];
+    public void comparePupilsPower(Hogwarts pupil) {
+            int strength1 = strength();
+            int strength2 = pupil.strength();
+            if (strength1 > strength2) {
+                System.out.println("Студент " + getFullName() + " сила которого равна " + strength1
+                        + " сильнее, чем " + pupil.getFullName() + " с силой " + strength2);
+            } else if (strength1 < strength2) {
+                System.out.println("Студент " + pupil.getFullName() + " сила которого равна " + strength2
+                        + " сильнее, чем " + getFullName() + " с силой " + strength1);
             } else {
-                count = twoPupils[i];
+                System.out.println("Студент " + pupil.getFullName() + " по силе равен студенту " + getFullName()
+                        + ": общий показатель силы равен" + strength1);
             }
-        }
-        System.out.println("\n" + hogwarts.get(bestPupil).getFullName()
-                + " может трансгрессировать на большее растояние, чем "
-                + hogwarts.get(count).getFullName() + "\n");
     }
 
     @Override

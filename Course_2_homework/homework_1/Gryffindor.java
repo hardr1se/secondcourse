@@ -1,10 +1,9 @@
 package homework_1;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Gryffindor extends Hogwarts {
-    Random random = new Random();
+    private Random random = new Random();
     private int nobleness;
     private int honor;
     private int bravery;
@@ -28,34 +27,29 @@ public class Gryffindor extends Hogwarts {
         return bravery;
     }
 
-    public void comparePupilsGryffindor() {
-        int max = Integer.MIN_VALUE;
-        int count = 0;
-        int bestPupil = 0;
-        ArrayList<Gryffindor> gryffindor = Main.fillGryffindor();
-        int[] twoPupils = new int[2];
-        System.out.println("Гриффиндор");
-        for (int i = 0; i < twoPupils.length; i++) {
-            twoPupils[i] = random.nextInt(0, gryffindor.size());
-            System.out.println(gryffindor.get(twoPupils[i]));
-            int sum = gryffindor.get(twoPupils[i]).getNobleness()
-                    + gryffindor.get(twoPupils[i]).getHonor()
-                    + gryffindor.get(twoPupils[i]).getBravery();
-            if (sum > max) {
-                count = bestPupil;
-                max = sum;
-                bestPupil = twoPupils[i];
-            } else {
-                count = twoPupils[i];
-            }
+    private int strength() {
+        return nobleness + honor + bravery;
+    }
+
+    public void comparePupilsGryffindor(Gryffindor pupil) {
+        int strength1 = strength();
+        int strength2 = pupil.strength();
+        if (strength1 > strength2) {
+            System.out.println("Студент " + getFullName() + " общее количество очков которого равна " + strength1
+                    + " лучший Гриффиндорец, чем " + pupil.getFullName() + " с общим количеством очков " + strength2);
+        } else if (strength1 < strength2) {
+            System.out.println("Студент " + pupil.getFullName() + " общее количество очков которого равна " + strength2
+                    + " лучший Гриффиндорец, чем " + getFullName() + " с общим количеством очков " + strength1);
+        } else {
+            System.out.println("Студент " + pupil.getFullName() + " такой же Гриффиндорец, как и студент " + getFullName()
+                    + ": общее количество очков равен у каждого равно " + strength1);
         }
-        System.out.println("\n" + gryffindor.get(bestPupil).getFullName() + " лучший Гриффиндорец, чем "
-                + gryffindor.get(count).getFullName() + "\n");
     }
 
     @Override
     public String toString() {
-        return getFullName() + " благородство = " + getNobleness() +
+        return getFullName() + ": сила магии = " + getPower() + "максимальное расстояние трансгрессии "
+                + getTransgressionRange() + ", благородство = " + getNobleness() +
                 ", честь = " + getHonor() +
                 ", храбрость = " + getBravery() + ",\n уровень магии = " + getPower()
                 + ", максимальное расстояние трансгрессии = " + getTransgressionRange();
