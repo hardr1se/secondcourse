@@ -1,10 +1,10 @@
 package homework_1;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Hufflepuff extends Hogwarts {
-    Random random = new Random();
+
+    private Random random = new Random();
     private int hard_working;
     private int loyalty;
     private int honesty;
@@ -28,30 +28,29 @@ public class Hufflepuff extends Hogwarts {
         return honesty;
     }
 
-    public static void comparePupilsHufflepuff() {
-        int max = Integer.MIN_VALUE; int count = 0;
-        int bestPupil = 0;
-        ArrayList<Hufflepuff> hufflepuff = Hogwarts.getHufflepuff();
-        System.out.println("Пуффендуй");
-        for (int i = 0; i < hufflepuff.size(); i++) {
-            System.out.println(hufflepuff.get(i));
-            int sum = hufflepuff.get(i).getHard_working()
-                    + hufflepuff.get(i).getLoyalty()
-                    + hufflepuff.get(i).getHonesty();
-            if (sum > max) {
-                max = sum;
-                bestPupil = i;
-            } else {
-                count = i;
-            }
+    private int strength() {
+        return hard_working + loyalty + honesty;
+    }
+
+    public void comparePupilsHufflepuff(Hufflepuff pupil) {
+        int strength1 = strength();
+        int strength2 = pupil.strength();
+        if (strength1 > strength2) {
+            System.out.println("Студент " + getFullName() + " общее количество очков которого равна " + strength1
+                    + " лучший Пуффендуец, чем " + pupil.getFullName() + " с общим количеством очков " + strength2);
+        } else if (strength1 < strength2) {
+            System.out.println("Студент " + pupil.getFullName() + " общее количество очков которого равна " + strength2
+                    + " лучший Пуффендуец, чем " + getFullName() + " с общим количеством очков " + strength1);
+        } else {
+            System.out.println("Студент " + pupil.getFullName() + " такой же Пуффендуец, как и студент " + getFullName()
+                    + ": общее количество очков равен у каждого равно " + strength1);
         }
-        System.out.println("\n" + hufflepuff.get(bestPupil).getFullName() + " лучший Пуффендуец, чем "
-                + hufflepuff.get(count).getFullName() + "\n");
     }
 
     @Override
     public String toString() {
-        return getFullName() + " трудолюбие = " + hard_working +
+        return  getFullName() + ": сила магии = " + getPower() + "максимальное расстояние трансгрессии "
+                + getTransgressionRange() + ", трудолюбие = " + hard_working +
                 ", верность = " + loyalty +
                 ", честность = " + honesty + ",\n уровень магии = " + getPower()
                 + ", максимальное расстояние трансгрессии = " + getTransgressionRange();

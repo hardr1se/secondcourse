@@ -1,10 +1,10 @@
 package homework_1;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Slytherin extends Hogwarts {
-    Random random = new Random();
+
+    private Random random = new Random();
     private int trickiness;
     private int resoluteness;
     private int ambition;
@@ -40,32 +40,29 @@ public class Slytherin extends Hogwarts {
         return authority_hunger;
     }
 
-    public static void comparePupilsSlytherin() {
-        int max = Integer.MIN_VALUE; int count = 0;
-        int bestPupil = 0;
-        ArrayList<Slytherin> slytherin = Hogwarts.getSlytherin();
-        System.out.println("Слизерин");
-        for (int i = 0; i < slytherin.size(); i++) {
-            System.out.println(slytherin.get(i));
-            int sum = slytherin.get(i).getTrickiness()
-                    + slytherin.get(i).getResoluteness()
-                    + slytherin.get(i).getAmbition()
-                    + slytherin.get(i).getReadiness()
-                    + slytherin.get(i).getAuthority_hunger();
-            if (sum > max) {
-                max = sum;
-                bestPupil = i;
-            } else {
-                count = i;
-            }
+    private int strength() {
+        return trickiness + resoluteness + ambition + readiness + authority_hunger;
+    }
+
+    public void comparePupilsSlytherin(Slytherin pupil) {
+        int strength1 = strength();
+        int strength2 = pupil.strength();
+        if (strength1 > strength2) {
+            System.out.println("Студент " + getFullName() + " общее количество очков которого равна " + strength1
+                    + " лучший Слизероновец, чем " + pupil.getFullName() + " с общим количеством очков " + strength2);
+        } else if (strength1 < strength2) {
+            System.out.println("Студент " + pupil.getFullName() + " общее количество очков которого равна " + strength2
+                    + " лучший Слизероновец, чем " + getFullName() + " с общим количеством очков " + strength1);
+        } else {
+            System.out.println("Студент " + pupil.getFullName() + " такой же Слизероновец, как и студент " + getFullName()
+                    + ": общее количество очков равен у каждого равно " + strength1);
         }
-        System.out.println("\n" + slytherin.get(bestPupil).getFullName() + " лучший Слизериновец, чем "
-                + slytherin.get(count).getFullName() + "\n");
     }
     
     @Override
     public String toString() {
-        return getFullName() + " хитрость = " + trickiness +
+        return getFullName() + ": сила магии = " + getPower() + "максимальное расстояние трансгрессии "
+                + getTransgressionRange() + ", хитрость = " + trickiness +
                 ", решительность = " + resoluteness +
                 ", амбициозность = " + ambition +
                 ", находчивость = " + readiness +

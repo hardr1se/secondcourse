@@ -1,10 +1,10 @@
 package homework_1;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Ravenclaw extends Hogwarts {
-    Random random = new Random();
+
+    private Random random = new Random();
     private int wisdom;
     private int wit;
     private int creativity;
@@ -28,30 +28,29 @@ public class Ravenclaw extends Hogwarts {
         return creativity;
     }
 
-    public static void comparePupilsRavenclaw() {
-        int max = Integer.MIN_VALUE; int count = 0;
-        int bestPupil = 0;
-        ArrayList<Ravenclaw> ravenclaw = Hogwarts.getRavenclaw();
-        System.out.println("Когтевран");
-        for (int i = 0; i < ravenclaw.size(); i++) {
-            System.out.println(ravenclaw.get(i));
-            int sum = ravenclaw.get(i).getWisdom()
-                    + ravenclaw.get(i).getWit()
-                    + ravenclaw.get(i).getCreativity();
-            if (sum > max) {
-                max = sum;
-                bestPupil = i;
-            } else {
-                count = i;
-            }
+    private int strength() {
+        return wisdom + wit + creativity;
+    }
+
+    public void comparePupilsRavenclaw(Ravenclaw pupil) {
+        int strength1 = strength();
+        int strength2 = pupil.strength();
+        if (strength1 > strength2) {
+            System.out.println("Студент " + getFullName() + " общее количество очков которого равна " + strength1
+                    + " лучший Когтеврановец, чем " + pupil.getFullName() + " с общим количеством очков " + strength2);
+        } else if (strength1 < strength2) {
+            System.out.println("Студент " + pupil.getFullName() + " общее количество очков которого равна " + strength2
+                    + " лучший Когтеврановец, чем " + getFullName() + " с общим количеством очков " + strength1);
+        } else {
+            System.out.println("Студент " + pupil.getFullName() + " такой же Когтеврановец, как и студент " + getFullName()
+                    + ": общее количество очков равен у каждого равно " + strength1);
         }
-        System.out.println("\n" + ravenclaw.get(bestPupil).getFullName() + " лучший Когтеврановец, чем "
-                + ravenclaw.get(count).getFullName() + "\n");
     }
 
     @Override
     public String toString() {
-        return getFullName() + " мудрость = " + wisdom +
+        return getFullName() + ": сила магии = " + getPower() + "максимальное расстояние трансгрессии "
+                + getTransgressionRange() + ", мудрость = " + wisdom +
                 ", остроумие = " + wit +
                 ", креативность = " + creativity + ",\n уровень магии = " + getPower()
                 + ", максимальное расстояние трансгрессии = " + getTransgressionRange();
