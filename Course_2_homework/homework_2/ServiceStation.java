@@ -11,10 +11,8 @@ public class ServiceStation {
                 vehicle.updateTyre();
             }
             if (vehicle.getClass() == car.getClass()) {
-                car = (Car) vehicle;
                 car.checkEngine();
             } else if (vehicle.getClass() == truck.getClass()) {
-                truck = (Truck) vehicle;
                 truck.checkEngine();
                 truck.checkTrailer();
             }
