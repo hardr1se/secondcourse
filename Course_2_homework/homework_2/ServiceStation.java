@@ -2,33 +2,22 @@ package homework_2;
 
 public class ServiceStation {
 
-    public void check(Car car) {
-        if (car != null) {
-            System.out.println("\nОбслуживаем " + car.getModelName());
-            for (int i = 0; i < car.getWheelsCount(); i++) {
-                car.updateTyre();
+    public void check(Vehicle vehicle) {
+        Car car = new Car(null, 0);
+        Truck truck = new Truck(null, 0);
+        if (vehicle != null) {
+            System.out.println("\nОбслуживаем " + vehicle.getModelName());
+            for (int i = 0; i < vehicle.getWheelsCount(); i++) {
+                vehicle.updateTyre();
             }
-            car.checkEngine();
-        }
-    }
-
-    public void check(Bicycle bicycle) {
-        if (bicycle != null) {
-            System.out.println("\nОбслуживаем " + bicycle.getModelName());
-            for (int i = 0; i < bicycle.getWheelsCount(); i++) {
-                bicycle.updateTyre();
+            if (vehicle.getClass() == car.getClass()) {
+                car = (Car) vehicle;
+                car.checkEngine();
+            } else if (vehicle.getClass() == truck.getClass()) {
+                truck = (Truck) vehicle;
+                truck.checkEngine();
+                truck.checkTrailer();
             }
-        }
-    }
-
-    public void check(Truck truck) {
-        if (truck != null) {
-            System.out.println("\nОбслуживаем " + truck.getModelName());
-            for (int i = 0; i < truck.getWheelsCount(); i++) {
-                truck.updateTyre();
-            }
-            truck.checkEngine();
-            truck.checkTrailer();
         }
     }
 }
