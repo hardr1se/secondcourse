@@ -1,6 +1,6 @@
 package homework_2;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements Service {
     private String modelName;
     private int wheelsCount;
 
@@ -23,6 +23,4 @@ public abstract class Vehicle {
     public void updateTyre() {
         System.out.println("Меняем покрышку");
     }
-
-    abstract void service();
 }

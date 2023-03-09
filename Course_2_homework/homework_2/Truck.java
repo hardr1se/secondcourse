@@ -1,9 +1,12 @@
 package homework_2;
 
-public class Truck extends Vehicle implements CheckTrailer, CheckEngine {
+public class Truck extends MotorVehicle {
+    public void checkTrailer() {
+        System.out.println("Проверяем прицеп");
+    }
 
     @Override
-    void service() {
+    public void service() {
         checkEngine();
         checkTrailer();
     }

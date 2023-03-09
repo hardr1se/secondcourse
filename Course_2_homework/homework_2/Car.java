@@ -1,8 +1,8 @@
 package homework_2;
 
-public class Car extends Vehicle implements CheckEngine {
+public class Car extends MotorVehicle {
     @Override
-    void service() {
+    public void service() {
         checkEngine();
     }
 }
