@@ -1,8 +1,10 @@
 package homework_2;
 
-public class Truck extends Vehicle implements CheckEngine, CheckTrailer {
+public class Truck extends Vehicle implements CheckTrailer, CheckEngine {
 
-    public Truck(String modelName, int wheelsCount) {
-        super(modelName, wheelsCount);
+    @Override
+    void service() {
+        checkEngine();
+        checkTrailer();
     }
 }
