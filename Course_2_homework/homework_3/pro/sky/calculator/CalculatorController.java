@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping (path = "/calculator")
 public class CalculatorController {
+
     private final CalculatorServiceInterface calculatorServiceInterface;
 
     public CalculatorController(CalculatorServiceInterface calculatorServiceInterface) {
