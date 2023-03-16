@@ -1,7 +1,7 @@
 package homework_2;
 
 public class Bicycle extends Vehicle {
-    @Override
-    public void service() {
+    public Bicycle(String modelName, int wheelsCount) {
+        super(modelName, wheelsCount);
     }
 }
