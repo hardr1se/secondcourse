@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CalculatorService implements pro.sky.calculator.CalculatorServiceInterface {
+
     public String welcome() {
         return "Добро пожаловать в калькулятор";
     }
