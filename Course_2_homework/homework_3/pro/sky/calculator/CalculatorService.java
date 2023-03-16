@@ -21,7 +21,7 @@ public class CalculatorService implements pro.sky.calculator.CalculatorServiceIn
     public String calculateMinus(Double num1, Double num2) {
         double result = num1 - num2;
         if (num1 % 1 != 0 || num2 % 1 != 0) {
-            return num1 + " + " + num2 + " = " + result;
+            return num1 + " - " + num2 + " = " + result;
         } else {
             return String.format("%.0f - %.0f = %.0f", num1, num2, result);
         }
@@ -30,7 +30,7 @@ public class CalculatorService implements pro.sky.calculator.CalculatorServiceIn
     public String calculateMultiply(Double num1, Double num2) {
         double result = num1 * num2;
         if (num1 % 1 != 0 || num2 % 1 != 0) {
-            return num1 + " + " + num2 + " = " + result;
+            return num1 + " * " + num2 + " = " + result;
         } else {
             return String.format("%.0f * %.0f = %.0f", num1, num2, result);
         }
@@ -42,7 +42,7 @@ public class CalculatorService implements pro.sky.calculator.CalculatorServiceIn
         }
         double result = num1 / num2;
         if (num1 % 1 != 0 || num2 % 1 != 0 || result % 1 != 0) {
-            return num1 + " + " + num2 + " = " + result;
+            return num1 + " / " + num2 + " = " + result;
         } else {
             return String.format("%.0f / %.0f = %.0f", num1, num2, result);
         }
