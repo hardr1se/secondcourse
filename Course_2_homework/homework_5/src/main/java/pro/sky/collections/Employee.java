@@ -3,6 +3,7 @@ package pro.sky.collections;
 import java.util.Objects;
 
 public class Employee {
+
     private String firstName;
     private String lastName;
 

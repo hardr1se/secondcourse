@@ -12,6 +12,7 @@ import pro.sky.collections.service.EmployeeService;
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
+
     EmployeeService employeeService = new EmployeeService();
 
     public EmployeeController(EmployeeService employeeService) {
