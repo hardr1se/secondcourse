@@ -76,7 +76,7 @@ public class Menu extends JFrame implements ActionListener {
         } else if (actionEvent.getSource() == removeTask) {
             taskService.remove();
         } else if (actionEvent.getSource() == refreshTasks) {
-            taskService.refreshAll();
+            taskService.correctionsAppearsIn();
         } else if (actionEvent.getSource() == printAll) {
             taskService.printAll();
         } else if (actionEvent.getSource() == exitMenu) {

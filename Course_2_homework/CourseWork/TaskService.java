@@ -5,12 +5,10 @@ import CourseWork.exceptions.TaskNotFoundException;
 import CourseWork.task.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static CourseWork.Type.PERSONAL;
-import static CourseWork.Type.WORK;
+import static CourseWork.Type.*;
 
 public class TaskService {
     private final Map<Integer, List<Task>> taskMap = new HashMap<>(Map.of(
@@ -37,14 +35,16 @@ public class TaskService {
         return taskMap;
     }
 
-    public void correctTasks(int key, List<Task> removeTask) {
-        switch (key) {
-            case 1 -> taskMap.get(key).removeAll(removeTask);
-            case 2 -> taskMap.get(key).stream().filter(removeTask::contains).forEach(x -> x.setLocalDateTime(x.getLocalDateTime().plusDays(1)));
-            case 3 -> taskMap.get(key).stream().filter(removeTask::contains).forEach(x -> x.setLocalDateTime(x.getLocalDateTime().plusWeeks(1)));
-            case 4 -> taskMap.get(key).stream().filter(removeTask::contains).forEach(x -> x.setLocalDateTime(x.getLocalDateTime().plusMonths(1)));
-            case 5 -> taskMap.get(key).stream().filter(removeTask::contains).forEach(x -> x.setLocalDateTime(x.getLocalDateTime().plusYears(1)));
-        }
+    public void correctionsAppearsIn() {
+        taskMap.values().stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList()).stream()
+                .forEach(x -> {
+                    if (x.appearsIn(x.getLocalDate())) {
+                        if (x.getClass().equals(OneTimeTask.class)) taskMap.get(1).remove(x);
+                        else x.setLocalDateToday();
+                    }
+                });
     }
 
     public void addTask() {
@@ -53,14 +53,14 @@ public class TaskService {
         String title = scanner.nextLine();
         System.out.println("Введите описание задачи");
         String description = scanner.nextLine();
-        Type typeOfTask = null;
+        CourseWork.Type typeOfTask = null;
         System.out.println("""
                 Введите какой тип задачи
                 1 - личная
                 2 - рабочая""");
         int type = scanner.nextInt();
-        if (type == 1) typeOfTask = Type.PERSONAL;
-        else if (type == 2) typeOfTask = Type.WORK;
+        if (type == 1) typeOfTask = CourseWork.Type.PERSONAL;
+        else if (type == 2) typeOfTask = CourseWork.Type.WORK;
         System.out.println("""
                 Введите какая повторяемость задачи:
                 1 - однократная,
@@ -144,14 +144,6 @@ public class TaskService {
             System.out.println("Сегодня у вас свободный день");
         }
         result.forEach(System.out::println);
-    }
-
-    public void refreshAll() {
-        for (int i = 1; i <= taskMap.size(); i++) {
-            correctTasks(i, taskMap.get(i).stream()
-                    .filter(x -> x.getLocalDateTime().isBefore(LocalDateTime.now()))
-                    .toList());
-        }
     }
 
     public void printAll() {

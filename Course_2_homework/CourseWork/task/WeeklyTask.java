@@ -3,8 +3,7 @@ package CourseWork.task;
 import CourseWork.Task;
 import CourseWork.Type;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 public class WeeklyTask extends Task {
     public WeeklyTask(String title, String description, Type type) {
@@ -12,11 +11,8 @@ public class WeeklyTask extends Task {
     }
 
     @Override
-    public void appearsIn() {
-        List<Task> removeTask = taskService.getTaskMap().get(3).stream()
-                .filter(x -> x.getLocalDateTime().isBefore(LocalDateTime.now()))
-                .toList();
-        taskService.correctTasks(3, removeTask);
+    public boolean appearsIn(LocalDate localDate) {
+        return localDate.getDayOfWeek().equals(LocalDate.now().getDayOfWeek());
     }
 
     @Override

@@ -74,11 +74,15 @@ public abstract class Task {
         return localDateTime.toLocalDate();
     }
 
+    public void setLocalDateToday() {
+        this.localDateTime = LocalDateTime.of(LocalDate.now(), localDateTime.toLocalTime());
+    }
+
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
 
-    public abstract void appearsIn();
+    public abstract boolean appearsIn(LocalDate localDate);
 
     @Override
     public int hashCode() {

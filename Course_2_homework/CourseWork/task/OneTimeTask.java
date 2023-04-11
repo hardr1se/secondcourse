@@ -3,8 +3,7 @@ package CourseWork.task;
 import CourseWork.Task;
 import CourseWork.Type;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 public class OneTimeTask extends Task {
     public OneTimeTask(String title, String description, Type type) {
@@ -12,11 +11,8 @@ public class OneTimeTask extends Task {
     }
 
     @Override
-    public void appearsIn() {
-        List<Task> removeTask = taskService.getTaskMap().get(1).stream()
-                .filter(x -> x.getLocalDateTime().isBefore(LocalDateTime.now()))
-                .toList();
-        taskService.correctTasks(1, removeTask);
+    public boolean appearsIn(LocalDate localDate) {
+        return localDate.isBefore(LocalDate.now());
     }
 
     @Override

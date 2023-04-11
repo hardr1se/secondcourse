@@ -3,8 +3,7 @@ package CourseWork.task;
 import CourseWork.Task;
 import CourseWork.Type;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 public class YearlyTask extends Task {
 
@@ -13,11 +12,8 @@ public class YearlyTask extends Task {
     }
 
     @Override
-    public void appearsIn() {
-        List<Task> removeTask = taskService.getTaskMap().get(5).stream()
-                .filter(x -> x.getLocalDateTime().isBefore(LocalDateTime.now()))
-                .toList();
-        taskService.correctTasks(5, removeTask);
+    public boolean appearsIn(LocalDate localDate) {
+        return localDate.plusYears(1).equals(LocalDate.now());
     }
 
     @Override
