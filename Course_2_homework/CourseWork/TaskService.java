@@ -6,9 +6,9 @@ import CourseWork.task.*;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static CourseWork.Type.*;
+import static CourseWork.Type.PERSONAL;
+import static CourseWork.Type.WORK;
 
 public class TaskService {
     private final Map<Integer, List<Task>> taskMap = new HashMap<>(Map.of(
@@ -30,22 +30,6 @@ public class TaskService {
                     new YearlyTask("Купить покушать", "Купить яйца, хлеб, молоко и йогурт",
                             PERSONAL)))
     ));
-
-    public Map<Integer, List<Task>> getTaskMap() {
-        return taskMap;
-    }
-
-    public void correctionsAppearsIn() {
-        taskMap.values().stream()
-                .flatMap(List::stream)
-                .toList()
-                .forEach(x -> {
-                    if (x.appearsIn(x.getLocalDate())) {
-                        if (x.getClass().equals(OneTimeTask.class)) taskMap.get(1).remove(x);
-                        else x.setLocalDateTime(x.takeNewDate());
-                    }
-                });
-    }
 
     public void addTask() {
         Scanner scanner = new Scanner(System.in);
@@ -93,6 +77,21 @@ public class TaskService {
         }
     }
 
+    public void printTodayPlans() {
+        List<Task> todayPlan = new ArrayList<>();
+        taskMap.values().stream()
+                .flatMap(List::stream)
+                .toList()
+                .forEach(task -> {
+                    if (task.appearsIn(task.getLocalDate())) {
+                        todayPlan.add(task);
+                    }
+                });
+        todayPlan.stream()
+                .sorted(Comparator.comparing(Task::getLocalDateTime))
+                .forEach(System.out::println);
+    }
+
     public void remove() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
@@ -133,17 +132,22 @@ public class TaskService {
             throw new IncorrectArgumentException("Неприльно введено значение даты");
         }
         LocalDate localDate = LocalDate.of(Integer.parseInt(checkArr[2]), Integer.parseInt(checkArr[1]), Integer.parseInt(checkArr[0]));
-
         List<Task> result = new ArrayList<>();
-        taskMap.values().forEach(result::addAll);
-        result = result.stream()
-                .filter(x -> x.getLocalDate().equals(localDate))
-                .sorted(Comparator.comparing(Task::getLocalDateTime))
-                .collect(Collectors.toList());
+        taskMap.values().stream()
+                .flatMap(List::stream)
+                .toList()
+                .forEach(task -> {
+                    if (task.appearsIn(localDate)) {
+                        result.add(task);
+                    }
+                });
         if (result.isEmpty()) {
             System.out.println("Сегодня у вас свободный день");
+        } else {
+            result.stream()
+                    .sorted(Comparator.comparing(Task::getLocalDateTime))
+                    .forEach(System.out::println);
         }
-        result.forEach(System.out::println);
     }
 
     public void printAll() {

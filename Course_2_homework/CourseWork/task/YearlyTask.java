@@ -3,9 +3,7 @@ package CourseWork.task;
 import CourseWork.Task;
 import CourseWork.Type;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 public class YearlyTask extends Task {
 
@@ -14,8 +12,9 @@ public class YearlyTask extends Task {
     }
 
     @Override
-    public List<LocalDateTime> generateCalendar(LocalDateTime localDateTime) {
-        return new ArrayList<>(List.of(localDateTime));
+    public boolean appearsIn(LocalDate localDate) {
+        return localDate.getDayOfMonth() == LocalDate.now().getDayOfMonth()
+                && localDate.getMonthValue() == LocalDate.now().getMonthValue();
     }
 
     @Override

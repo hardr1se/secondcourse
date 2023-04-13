@@ -13,6 +13,7 @@ public class Menu extends JFrame implements ActionListener {
     JMenu editMenu;
     JMenu helpMenu;
     JMenuItem printTasksOnDay;
+    JMenuItem printTodayTasks;
     JMenuItem addTask;
     JMenuItem removeTask;
     JMenuItem refreshTasks;
@@ -33,7 +34,8 @@ public class Menu extends JFrame implements ActionListener {
         editMenu = new JMenu("Edit");
         helpMenu = new JMenu("Help");
 
-        printTasksOnDay = new JMenuItem("Tasks on day");
+        printTasksOnDay = new JMenuItem("Today tasks");
+        printTodayTasks = new JMenuItem("Other day tasks");
         addTask = new JMenuItem("Add");
         removeTask = new JMenuItem("Delete");
         refreshTasks = new JMenuItem("Refresh");
@@ -48,11 +50,13 @@ public class Menu extends JFrame implements ActionListener {
 
         fileMenu.add(printAll);
         fileMenu.add(printTasksOnDay);
+        fileMenu.add(printTodayTasks);
         editMenu.add(addTask);
         editMenu.add(removeTask);
         editMenu.add(refreshTasks);
 
         printTasksOnDay.addActionListener(this);
+        printTodayTasks.addActionListener(this);
         addTask.addActionListener(this);
         removeTask.addActionListener(this);
         refreshTasks.addActionListener(this);
@@ -69,14 +73,14 @@ public class Menu extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == printTasksOnDay) {
+        if (actionEvent.getSource() == printTodayTasks) {
+            taskService.printTodayPlans();
+        } else if (actionEvent.getSource() == printTasksOnDay) {
             taskService.getAllByDate();
         } else if (actionEvent.getSource() == addTask) {
             taskService.addTask();
         } else if (actionEvent.getSource() == removeTask) {
             taskService.remove();
-        } else if (actionEvent.getSource() == refreshTasks) {
-            taskService.correctionsAppearsIn();
         } else if (actionEvent.getSource() == printAll) {
             taskService.printAll();
         } else if (actionEvent.getSource() == exitMenu) {
