@@ -3,7 +3,9 @@ package CourseWork.task;
 import CourseWork.Task;
 import CourseWork.Type;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OneTimeTask extends Task {
     public OneTimeTask(String title, String description, Type type) {
@@ -11,8 +13,8 @@ public class OneTimeTask extends Task {
     }
 
     @Override
-    public boolean appearsIn(LocalDate localDate) {
-        return localDate.isBefore(LocalDate.now());
+    public List<LocalDateTime> generateCalendar(LocalDateTime localDateTime) {
+        return new ArrayList<>(List.of(localDateTime));
     }
 
     @Override

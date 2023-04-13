@@ -38,11 +38,11 @@ public class TaskService {
     public void correctionsAppearsIn() {
         taskMap.values().stream()
                 .flatMap(List::stream)
-                .collect(Collectors.toList()).stream()
+                .toList()
                 .forEach(x -> {
                     if (x.appearsIn(x.getLocalDate())) {
                         if (x.getClass().equals(OneTimeTask.class)) taskMap.get(1).remove(x);
-                        else x.setLocalDateToday();
+                        else x.setLocalDateTime(x.takeNewDate());
                     }
                 });
     }
