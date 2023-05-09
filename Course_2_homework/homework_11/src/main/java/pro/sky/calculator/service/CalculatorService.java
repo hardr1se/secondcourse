@@ -8,7 +8,7 @@ import java.util.Objects;
 @Service
 public class CalculatorService {
     public Integer calculate(Integer num1, Integer num2, String operation) {
-        if ((Objects.equals(operation, "/") && num2 == 0) || num1 == null || num2 == null) {
+        if (num1 == null || num2 == null || (Objects.equals(operation, "/") && num2 == 0)) {
             throw new IllegalArgumentException();
         }
         switch (operation) {
@@ -20,7 +20,7 @@ public class CalculatorService {
         }
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
     private String illegalArgumentArgumentExceptionHandler() {
         return "Вы ввели некорректные значения";
     }

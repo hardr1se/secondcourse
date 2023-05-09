@@ -27,12 +27,10 @@ public class CollectionsApplicationParameterizedTests {
         assertEquals(result, calculatorService.calculate(num1, num2, operation));
     }
 
-    @Test
-    void exceptionsTest() {
-        assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(5, 0, "/"));
-        assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(5, null, "/"));
-        assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(null, 5, "/"));
-        assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(null, null, "/"));
+    @ParameterizedTest
+    @MethodSource("provideParamsForException")
+    void exceptionsTest(Integer num1, Integer num2, String operation) {
+        assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(num1, num2, operation));
     }
 
     public static Stream<Arguments> provideParams() {
@@ -45,6 +43,15 @@ public class CollectionsApplicationParameterizedTests {
                 Arguments.of(10, 10, "+"),
                 Arguments.of(10, 10, "*"),
                 Arguments.of(10, 10, "/")
+        );
+    }
+
+    public static Stream<Arguments> provideParamsForException() {
+        return Stream.of(
+                Arguments.of(5, 0, "/"),
+                Arguments.of(5, null, "/"),
+                Arguments.of(null, 5, "/"),
+                Arguments.of(null, null, "/")
         );
     }
 }

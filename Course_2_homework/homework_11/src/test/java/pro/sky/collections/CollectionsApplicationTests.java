@@ -16,9 +16,9 @@ class CollectionsApplicationTests {
 	@Test
 	void exceptionsTest() {
 		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(num1, 0, "/"));
-		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(num1, null, "-"));
-		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(null, num2, "-"));
-		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(null, null, "-"));
+		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(num1, null, "/"));
+		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(null, num2, "/"));
+		assertThrows(IllegalArgumentException.class, () -> calculatorService.calculate(null, null, "/"));
 	}
 
 	@Test
