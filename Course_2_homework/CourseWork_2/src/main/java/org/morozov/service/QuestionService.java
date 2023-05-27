@@ -1,6 +1,6 @@
 package org.morozov.service;
 
-import org.morozov.utils.Question;
+import org.morozov.model.Question;
 
 import java.util.Collection;
 

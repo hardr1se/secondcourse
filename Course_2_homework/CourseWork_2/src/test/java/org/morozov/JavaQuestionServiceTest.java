@@ -1,110 +1,135 @@
 package org.morozov;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.morozov.exception.IncorrectArgumentException;
 import org.morozov.exception.NotFoundElementException;
 import org.morozov.exception.StorageIsEmptyException;
+import org.morozov.repository.JavaQuestionRepository;
 import org.morozov.service.impl.JavaQuestionService;
-import org.morozov.utils.Question;
+import org.morozov.model.Question;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
+    @Mock
+    JavaQuestionRepository javaQuestionRepository;
     @InjectMocks
-    private JavaQuestionService javaQuestionService = new JavaQuestionService();
-
-    @BeforeEach
-    public void beforeEach() {
-        javaQuestionService = new JavaQuestionService();
-        javaQuestionService.add("TeST 1", "TesT");
-        javaQuestionService.add("TEST 2", "TeST");
-        javaQuestionService.add("TesT 3", "TEST");
-    }
+    JavaQuestionService javaQuestionService = new JavaQuestionService(null);
 
     @Test
     public void addFirstTest() {
-        Assertions.assertThat(javaQuestionService.add("PoSiTIVe test", "TeST"))
-                .isEqualTo(new Question("Positive test", "Test"))
-                .isIn(javaQuestionService.getAll());
-    }
+        Mockito.when(javaQuestionRepository.add(new Question("Test", "Testy")))
+                .thenReturn(new Question("Test", "Testy"));
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
 
-    @Test
-    public void addFirstNegativeTest() {
-        Assertions.assertThatExceptionOfType(IncorrectArgumentException.class)
-                .isThrownBy(() -> javaQuestionService.add("TeST", "test"))
-                .isNotIn(javaQuestionService.getAll());
+        Assertions.assertThat(javaQuestionService.add("TeST", "tESTy"))
+                .isEqualTo(new Question("Test", "Testy"))
+                .isIn(javaQuestionRepository.getAll());
     }
 
     @Test
     public void addSecondTest() {
-        Assertions.assertThat(javaQuestionService.add(new Question("PoSiTIVe test", "TeST")))
-                .isEqualTo(new Question("Positive test", "Test"))
-                .isIn(javaQuestionService.getAll());
-    }
+        Mockito.when(javaQuestionRepository.add(new Question("Test", "Testy")))
+                .thenReturn(new Question("Test", "Testy"));
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
 
-    @Test
-    public void addSecondNegativeTest() {
-        Assertions.assertThatExceptionOfType(IncorrectArgumentException.class)
-                .isThrownBy(() -> javaQuestionService.add(new Question("TeST", "test")))
-                .isNotIn(javaQuestionService.getAll());
+        Assertions.assertThat(javaQuestionService.add(new Question("TeST", "tESTY")))
+                .isEqualTo(new Question("Test", "Testy"))
+                .isIn(javaQuestionRepository.getAll());
     }
 
     @Test
     public void removeTest() {
-        Assertions.assertThat(javaQuestionService.remove(new Question("TeST 1", "TesT")))
-                .isEqualTo(new Question("Test 1", "Test"))
-                .isNotIn(javaQuestionService.getAll());
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+        Mockito.when(javaQuestionRepository.remove(new Question("Test", "Testy")))
+                .thenReturn(new Question("Test", "Testy"));
+
+        Assertions.assertThat(javaQuestionService.remove(new Question("TEST", "TeSTy")))
+                .isEqualTo(new Question("Test", "Testy"));
     }
 
     @Test
     public void removeNegativeTest() {
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+
         Assertions.assertThatExceptionOfType(NotFoundElementException.class)
-                .isThrownBy(() -> javaQuestionService.remove(new Question("NegaTIvE tEsT", "test")))
-                .isNotIn(javaQuestionService.getAll());
+                .isThrownBy(() -> javaQuestionService.remove(new Question("Test", "Testiye")));
     }
 
     @Test
     public void findTest() {
-        Assertions.assertThat(javaQuestionService.find("TeST 1", "TEST"))
-                .isEqualTo(new Question("Test 1", "Test"))
-                .isIn(javaQuestionService.getAll());
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+
+        Assertions.assertThat(javaQuestionService.find("TEST", "TeSTy"))
+                .isEqualTo(new Question("Test", "Testy"));
     }
 
     @Test
     public void findNegativeTest() {
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+
         Assertions.assertThatExceptionOfType(NotFoundElementException.class)
-                .isThrownBy(() -> javaQuestionService.find("NegaTIvE tEsT", "test"))
-                .isNotIn(javaQuestionService.getAll());
+                .isThrownBy(() -> javaQuestionService.find("Test", "Testiye"));
     }
 
     @Test
     public void getAllTest() {
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+
         Assertions.assertThat(javaQuestionService.getAll())
-                .isEqualTo(new HashSet<>(Set.of(
-                        new Question("Test 1", "Test"),
-                        new Question("Test 2", "Test"),
-                        new Question("Test 3", "Test"))));
+                .isEqualTo(new HashSet<>(Set.of(new Question("Test", "Testy"))));
     }
 
     @Test
     public void getRandomQuestionTest() {
-        javaQuestionService.remove(new Question("TEST 2", "TeST"));
-        javaQuestionService.remove(new Question("TesT 3", "TEST"));
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+
         Assertions.assertThat(javaQuestionService.getRandomQuestion(1))
-                .isEqualTo(new Question("Test 1", "Test"))
-                .isIn(javaQuestionService.getAll());
+                .isEqualTo(new Question("Test", "Testy"))
+                .isIn(javaQuestionRepository.getAll());
     }
 
     @Test
     public void getRandomQuestionNegativeTest() {
-        javaQuestionService.remove(new Question("TeST 1", "TesT"));
-        javaQuestionService.remove(new Question("TEST 2", "TeST"));
-        javaQuestionService.remove(new Question("TesT 3", "TEST"));
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>());
+
         Assertions.assertThatExceptionOfType(StorageIsEmptyException.class)
                 .isThrownBy(() -> javaQuestionService.getRandomQuestion(1));
+    }
+
+    @Test
+    public void getQuestion() {
+        Mockito.when(javaQuestionRepository.getAll())
+                .thenReturn(new HashSet<>(Set.of(new Question("Test", "Testy"))));
+
+        Assertions.assertThat(javaQuestionService.getQuestion("TESt", "tesTY"))
+                .isEqualTo(new Question("Test", "Testy"))
+                .isIn(javaQuestionRepository.getAll());
+    }
+
+    @Test
+    public void getNegativeQuestion() {
+        Assertions.assertThatExceptionOfType(IncorrectArgumentException.class)
+                .isThrownBy(() -> javaQuestionService.getQuestion("TesT", "tESt"));
+
+        Assertions.assertThatExceptionOfType(IncorrectArgumentException.class)
+                .isThrownBy(() -> javaQuestionService.getQuestion("  ", "   "));
     }
 }
