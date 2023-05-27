@@ -99,16 +99,6 @@ public class IntegerShelf implements IntegerList {
     }
 
     @Override
-    public boolean contains(Integer item) {
-        for (Integer s : storage) {
-            if (Objects.equals(s, item)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     public int indexOf(Integer item) {
         for (int i = 0; i < storage.length; i++) {
             if (Objects.equals(storage[i], item)) {
@@ -175,14 +165,25 @@ public class IntegerShelf implements IntegerList {
         return Arrays.toString(Arrays.copyOf(storage, size));
     }
 
-    public void sort() {
-        quickSort(storage, 0, size - 1); //TODO 18 nanosec 100_000 elements
-        //Arrays.sort(storage); TODO 89 nanosec 100_000 elements
-        //sortWithLotOfLoops(storage); TODO 16370 nanosec 100_000 elements
-        //bubbleSort(sortArray); TODO 29755 nanosec 100_000 elements
+    @Override
+    public boolean contains(Integer item) {
+        Integer[] array = Arrays.copyOf(storage, size);
+        quickSort(array, 0, array.length - 1);
+        return binarySearch(array, item);
     }
 
-    private void quickSort(Integer arr[], int begin, int end) {
+    public void sort() {
+        quickSort(storage, 0, size - 1); //TODO 18 nanosec per 100_000 elements
+        //Arrays.sort(storage); TODO 89 nanosec per 100_000 elements
+        //sortWithLotOfLoops(storage); TODO 16370 nanosec per 100_000 elements
+        //bubbleSort(sortArray); TODO 29755 nanosec per 100_000 elements
+    }
+
+    private boolean binarySearch(Integer[] array, Integer num) {
+        return Arrays.binarySearch(array, num) >= 0;
+    }
+
+    private void quickSort(Integer[] arr, int begin, int end) {
         if (begin < end) {
             int partitionIndex = partition(arr, begin, end);
 
@@ -210,10 +211,10 @@ public class IntegerShelf implements IntegerList {
     }
 
     private void sortWithLotOfLoops(int[] array) {
-        int temp = 0;
-        for (int i = 0; i <array.length; i++) {
-            for (int j = i+1; j <array.length; j++) {
-                if( array[i] >array[j]) {      //swap elements if not in order
+        int temp;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if( array[i] > array[j]) {
                     temp = array[i];
                     array[i] = array[j];
                     array[j] = temp;
