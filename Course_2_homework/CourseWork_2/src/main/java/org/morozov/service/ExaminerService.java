@@ -1,9 +1,10 @@
 package org.morozov.service;
 
-import org.morozov.utils.Question;
+import org.morozov.model.Question;
 
 import java.util.Collection;
 
 public interface ExaminerService {
-    Collection<Question> getQuestions(int amount);
+    Collection<Question> getQuestions(Integer amount);
+    Collection<Question> getMathQuestions(Integer amount);
 }

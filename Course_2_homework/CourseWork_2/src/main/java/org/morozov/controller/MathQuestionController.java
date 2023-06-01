@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/exam/java")
-public class JavaController {
+@RequestMapping("/exam/java/math")
+public class MathQuestionController {
     QuestionService questionService;
 
-    public JavaController(@Qualifier("javaQuestionService") QuestionService questionService) {
+    public MathQuestionController(@Qualifier("mathQuestionService") QuestionService questionService) {
         this.questionService = questionService;
     }
 
@@ -26,7 +26,7 @@ public class JavaController {
     @GetMapping("/remove")
     public Question removeQuestion(@RequestParam(value = "question", required = false) String question,
                                    @RequestParam(value = "answer", required = false) String answer) {
-        return questionService.remove(new Question(question, answer));
+        return questionService.remove(new Question(question,answer));
     }
 
     @GetMapping()
