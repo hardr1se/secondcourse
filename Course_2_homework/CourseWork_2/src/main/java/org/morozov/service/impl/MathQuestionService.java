@@ -2,8 +2,6 @@ package org.morozov.service.impl;
 
 import org.morozov.exception.IncorrectArgumentException;
 import org.morozov.exception.NotFoundElementException;
-import org.morozov.exception.StorageIsEmptyException;
-import org.morozov.repository.MathQuestionRepository;
 import org.morozov.service.QuestionService;
 import org.morozov.model.Question;
 import org.springframework.stereotype.Service;
@@ -62,17 +60,32 @@ public class MathQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion(int i)
-            throws StorageIsEmptyException {
-        if (mathQuestionRepository.getAll().isEmpty()) {
-            throw new StorageIsEmptyException("Fill the storage before using");
+            throws IncorrectArgumentException {
+        int randomNumber = RandomGenerator.getDefault().nextInt(1, 5);
+        int firstNum = RandomGenerator.getDefault().nextInt(1, 10_000);
+        int secondNum = RandomGenerator.getDefault().nextInt(1, 10_000);
+        String question;
+        Integer answer;
+        switch (randomNumber) {
+            case 1 -> {
+                question = firstNum + " + " + secondNum;
+                answer = firstNum + secondNum;
+            }
+            case 2 -> {
+                question = firstNum + " - " + secondNum;
+                answer = firstNum - secondNum;
+            }
+            case 3 -> {
+                question = firstNum + " * " + secondNum;
+                answer = firstNum * secondNum;
+            }
+            case 4 -> {
+                question = firstNum + " / " + secondNum;
+                answer = firstNum / secondNum;
+            }
+            default -> throw new IncorrectArgumentException("Unsupported value");
         }
-        if (i == 1) {
-            copyMathExam = new ArrayList<>(mathQuestionRepository.getAll());
-        }
-        int randomNumber = RandomGenerator.getDefault().nextInt(0, copyMathExam.size());
-        Question randomQuestion = copyMathExam.get(randomNumber);
-        copyMathExam.remove(randomNumber);
-        return randomQuestion;
+        return new Question(question, String.valueOf(answer));
     }
 
     public Question getQuestion(String question, String answer)
