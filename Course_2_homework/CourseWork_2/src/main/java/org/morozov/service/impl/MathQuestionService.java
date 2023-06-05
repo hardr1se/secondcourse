@@ -1,82 +1,53 @@
 package org.morozov.service.impl;
 
 import org.morozov.exception.IncorrectArgumentException;
-import org.morozov.exception.NotFoundElementException;
-import org.morozov.exception.StorageIsEmptyException;
-import org.morozov.repository.MathQuestionRepository;
 import org.morozov.service.QuestionService;
 import org.morozov.model.Question;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.random.RandomGenerator;
 
 import static org.apache.commons.lang3.StringUtils.*;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class MathQuestionService implements QuestionService {
-    List<Question> copyMathExam;
-    MathQuestionRepository mathQuestionRepository;
-
-    public MathQuestionService(MathQuestionRepository mathQuestionRepository) {
-        this.mathQuestionRepository = mathQuestionRepository;
-    }
-
     @Override
-    public Question add(String question, String answer) {
-        Question fullQuestion = getQuestion(question, answer);
-        return mathQuestionRepository.add(fullQuestion);
-    }
-
-    @Override
-    public Question add(Question question) {
-        Question fullQuestion = getQuestion(question.getQuestion(), question.getAnswer());
-        return mathQuestionRepository.add(fullQuestion);
-    }
-
-    @Override
-    public Question remove(Question question)
-            throws NotFoundElementException {
-        Question fullQuestion = getQuestion(question.getQuestion(), question.getAnswer());
-        if (!mathQuestionRepository.getAll().contains(fullQuestion)) {
-            throw new NotFoundElementException("This question wasn't found");
+    public Question getRandomQuestion(int i) {
+        int randomNumber = getRandomNumber(true);
+        int firstNum = getRandomNumber(false);
+        int secondNum = getRandomNumber(false);
+        String question;
+        Integer answer;
+        switch (randomNumber) {
+            case 1 -> {
+                question = firstNum + " + " + secondNum + " = ";
+                answer = firstNum + secondNum;
+            }
+            case 2 -> {
+                question = firstNum + " - " + secondNum + " = ";
+                answer = firstNum - secondNum;
+            }
+            case 3 -> {
+                question = firstNum + " * " + secondNum + " = ";
+                answer = firstNum * secondNum;
+            }
+            case 4 -> {
+                question = firstNum + " / " + secondNum + " = ";
+                answer = firstNum / secondNum;
+            }
+            default -> throw new IncorrectArgumentException("Unsupported value");
         }
-        return mathQuestionRepository.remove(fullQuestion);
+        return new Question(question, String.valueOf(answer));
     }
 
-    @Override
-    public Question find(String question, String answer)
-            throws NotFoundElementException {
-        Question fullQuestion = getQuestion(question, answer);
-        if (!mathQuestionRepository.getAll().contains(fullQuestion)) {
-            throw new NotFoundElementException("This question wasn't found");
-        }
-        return fullQuestion;
+    public Integer getRandomNumber(boolean checker) {
+        return (int) (checker ?
+                Math.floor(Math.random() * 4) + 1 :
+                Math.floor(Math.random() * 10_000) + 1);
     }
 
-    @Override
-    public Collection<Question> getAll() {
-        return mathQuestionRepository.getAll();
-    }
-
-    @Override
-    public Question getRandomQuestion(int i)
-            throws StorageIsEmptyException {
-        if (mathQuestionRepository.getAll().isEmpty()) {
-            throw new StorageIsEmptyException("Fill the storage before using");
-        }
-        if (i == 1) {
-            copyMathExam = new ArrayList<>(mathQuestionRepository.getAll());
-        }
-        int randomNumber = RandomGenerator.getDefault().nextInt(0, copyMathExam.size());
-        Question randomQuestion = copyMathExam.get(randomNumber);
-        copyMathExam.remove(randomNumber);
-        return randomQuestion;
-    }
-
-    public Question getQuestion(String question, String answer)
-            throws IncorrectArgumentException {
+    public Question getQuestion(String question, String answer) {
         if (Objects.equals(question, answer)) {
             throw new IncorrectArgumentException("Question and argument are similar");
         } else if (isBlank(question) || isBlank(answer)) {

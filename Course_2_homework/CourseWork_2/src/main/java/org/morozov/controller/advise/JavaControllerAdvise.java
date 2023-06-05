@@ -1,6 +1,7 @@
 package org.morozov.controller.advise;
 
 import org.morozov.exception.IncorrectArgumentException;
+import org.morozov.exception.MethodNotAllowedException;
 import org.morozov.exception.NotFoundElementException;
 import org.morozov.exception.StorageIsEmptyException;
 import org.springframework.http.HttpStatus;
@@ -23,5 +24,10 @@ public class JavaControllerAdvise {
     @ExceptionHandler(StorageIsEmptyException.class)
     public ResponseEntity<String> storageIsEmptyExceptionHandler(StorageIsEmptyException e) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodNotAllowedException.class)
+    public ResponseEntity<String> methodNotAllowedExceptionHandler(MethodNotAllowedException e) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(e.getMessage());
     }
 }
