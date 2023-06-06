@@ -1,6 +1,7 @@
 package org.morozov.service.impl;
 
 import org.morozov.exception.IncorrectArgumentException;
+import org.morozov.exception.MethodNotAllowedException;
 import org.morozov.service.QuestionService;
 import org.morozov.model.Question;
 import org.springframework.stereotype.Service;
@@ -8,10 +9,34 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.*;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class MathQuestionService implements QuestionService {
+    @Override
+    public Question add(String question, String answer) {
+        throw new MethodNotAllowedException("Method is unavailable");
+    }
+
+    @Override
+    public Question add(Question question) {
+        throw new MethodNotAllowedException("Method is unavailable");
+    }
+
+    @Override
+    public Question remove(Question question) {
+        throw new MethodNotAllowedException("Method is unavailable");
+    }
+
+    @Override
+    public Question find(String question, String answer) {
+        throw new MethodNotAllowedException("Method is unavailable");
+    }
+
+    @Override
+    public Collection<Question> getAll() {
+        throw new MethodNotAllowedException("Method is unavailable");
+    }
+
     @Override
     public Question getRandomQuestion(int i) {
         int randomNumber = getRandomNumber(true);
